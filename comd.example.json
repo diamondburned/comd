@@ -1,0 +1,11 @@
+{
+  "base_path": "/commands",
+  "execute": {
+    "shell": ["bash", "-c", "%"],
+    "timeout": "5s"
+  },
+  "commands": {
+    "volume_up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+    "volume_down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+  }
+}
