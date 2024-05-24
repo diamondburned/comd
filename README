@@ -1,0 +1,26 @@
+―❤―▶ go run ./cmd/comd/ -h
+About:
+  comd implements a Command Daemon that listens for HTTP requests to execute commands.
+  For more information, see https://libdb.so/comd.
+
+Usage:
+  comd [flags]
+
+Flags:
+  -c, --config-file string   path to the configuration file (default "comd.example.json")
+  -l, --listen-addr string   HTTP address to listen on (default ":8080")
+      --log-format string    log format (color, text, json) (default "color")
+  -s, --silent               suppress all output except errors
+  -v, --verbose              increase verbosity level, overrides --silent (info by default, -v for debug)
+
+―❤―▶ go run ./cmd/comd/
+May 24 16:01:55.568 INF starting server listen_addr=:8080
+May 24 16:01:58.719 INF executing command command="pactl set-sink-volume @DEFAULT_SINK@ +5%" is_shell=true working_dir=""
+May 24 16:01:58.731 INF command completed command="pactl set-sink-volume @DEFAULT_SINK@ +5%" duration=12.437162ms
+
+―❤―▶ curl -X POST localhost:8080/commands/volume_up
+
+―❤―▶ cat LICENSE | head -n3
+ISC License Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
+
+Copyright (c) 2024 diamondburned
