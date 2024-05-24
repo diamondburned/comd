@@ -5,7 +5,7 @@
   };
 
   outputs = (
-    { flakelight, ... }:
+    { self, flakelight, ... }:
 
     flakelight ./. {
       license = "ISC";
@@ -18,7 +18,16 @@
           nixfmt-rfc-style
         ];
 
-      # package = 
+      package =
+        { buildGoModule, defaultMeta }:
+
+        buildGoModule {
+          pname = "comd";
+          version = self.rev or "unknown";
+          vendorHash = "sha256-q90/jmMctvkKraw40BLkgaTF7YQkj8xbWlALNB73Cdw=";
+          src = ./.;
+          meta = defaultMeta;
+        };
     }
   );
 }
