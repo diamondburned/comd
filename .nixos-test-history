@@ -1,0 +1,39 @@
+
+# 2024-05-24 18:03:01.721880
++start_all()
+
+# 2024-05-24 18:03:27.731056
++machine.execute("systemctl status comd")
+
+# 2024-05-24 18:05:37.399171
++quit()
+
+# 2024-05-24 18:10:13.777460
++start_all()
+
+# 2024-05-24 18:10:44.227354
++machine.execute("ls /tmp")
+
+# 2024-05-24 18:10:50.218388
++print(machine.execute("ls /tmp")[1])
+
+# 2024-05-24 18:10:59.747636
++print(machine.execute("journalctl -eu comd")[1])
+
+# 2024-05-24 18:11:13.412384
++print(machine.execute("curl -X POST http://localhost:8081/commands/finish")[1])
+
+# 2024-05-24 18:15:26.920372
++start_all()
+
+# 2024-05-24 18:15:51.191087
++print(machine.execute("journalctl -eu comd")[1])
+
+# 2024-05-24 18:15:53.624236
++print(machine.execute("curl -X POST http://localhost:8081/commands/finish")[1])
+
+# 2024-05-24 18:16:04.432709
++print(machine.execute("systemctl status comd")[1])
+
+# 2024-05-24 18:16:12.880839
++print(machine.execute("cat  /nix/store/zp5ikgfpzr55zp8k1l5zjbkilrd48s0d-comd.json ")[1])
