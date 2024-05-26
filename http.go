@@ -5,6 +5,7 @@ import (
 	"log/slog"
 	"net/http"
 	"path"
+	"regexp"
 	"slices"
 	"unicode"
 )
@@ -87,9 +88,10 @@ func bytesArePrintable(b []byte) bool {
 	return slices.ContainsFunc([]rune(string(b)), func(r rune) bool { return !unicode.IsPrint(r) })
 }
 
+var doctypeRe = regexp.MustCompile(`(?mi)^<!DOCTYPE +html.*>$`)
+
 func bytesIsHTML(b []byte) bool {
-	const doctype = "<!DOCTYPE html>"
-	return len(b) > len(doctype) && bytes.EqualFold(b[:len(doctype)], []byte(doctype))
+	return doctypeRe.Match(b)
 }
 
 func (s *HTTPServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
