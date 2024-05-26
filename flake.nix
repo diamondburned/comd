@@ -32,6 +32,11 @@
           };
         };
 
+      formatters = {
+        "*.go" = "goimports -w";
+        "*.nix" = "nixfmt";
+      };
+
       module =
         {
           isHome ? false,
@@ -205,6 +210,7 @@
         devShell
         package
         checks
+        formatters
         ;
       nixosModule = module { isHome = false; };
       homeModule = module { isHome = true; };
