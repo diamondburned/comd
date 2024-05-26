@@ -5,6 +5,8 @@ import (
 	"log/slog"
 	"net/http"
 	"path"
+	"slices"
+	"unicode"
 )
 
 // HTTPServer is the HTTP request handler for the Command Daemon.
@@ -63,13 +65,23 @@ func (s *HTTPServer) commandHandler(command CommandOpts) http.Handler {
 		}
 
 		if out.Len() > 0 {
-			w.Header().Set("Content-Type", "application/octet-stream")
+			if bytesArePrintable(out.Bytes()) {
+				w.Header().Set("Content-Type", "text/plain")
+				w.Header().Set("Content-Disposition", "inline")
+			} else {
+				w.Header().Set("Content-Type", "application/octet-stream")
+				w.Header().Set("Content-Disposition", "attachment")
+			}
 			w.WriteHeader(http.StatusOK)
 			w.Write(out.Bytes())
 		} else {
 			w.WriteHeader(http.StatusNoContent)
 		}
 	})
+}
+
+func bytesArePrintable(b []byte) bool {
+	return slices.ContainsFunc([]rune(string(b)), func(r rune) bool { return !unicode.IsPrint(r) })
 }
 
 func (s *HTTPServer) ServeHTTP(w http.ResponseWriter, r *http.Request) {
