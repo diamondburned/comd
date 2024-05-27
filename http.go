@@ -66,13 +66,12 @@ func (s *HTTPServer) commandHandler(command CommandOpts) http.Handler {
 		}
 
 		if out.Len() > 0 {
-			switch {
-			case bytesIsHTML(out.Bytes()):
+			if bytesIsHTML(out.Bytes()) {
 				w.Header().Set("Content-Type", "text/html")
-			case bytesArePrintable(out.Bytes()):
+			} else if bytesArePrintable(out.Bytes()) {
 				w.Header().Set("Content-Type", "text/plain")
 				w.Header().Set("Content-Disposition", "inline")
-			default:
+			} else {
 				w.Header().Set("Content-Type", "application/octet-stream")
 				w.Header().Set("Content-Disposition", "attachment")
 			}
