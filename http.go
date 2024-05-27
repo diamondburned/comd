@@ -87,7 +87,7 @@ func bytesArePrintable(b []byte) bool {
 	return slices.ContainsFunc([]rune(string(b)), func(r rune) bool { return !unicode.IsPrint(r) })
 }
 
-var doctypeRe = regexp.MustCompile(`(?mi)^<!DOCTYPE +html.*>$`)
+var doctypeRe = regexp.MustCompile(`(?mi)<!DOCTYPE +html.*>`)
 
 func bytesIsHTML(b []byte) bool {
 	return doctypeRe.Match(b)
